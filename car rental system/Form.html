@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Form</title>
+    <link rel="stylesheet" href="form-styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <!-- Form Box -->
+        <div class="form-box">
+            <h2>Enter Your Information</h2>
+            <div class="form-fields">
+                <label for="customerName">Customer Name</label>
+                <input type="text" id="customerName" name="customerName" required>
+                
+                <label for="customerPhone">Customer Phone Number</label>
+                <input type="text" id="customerPhone" name="customerPhone" required>
+                
+                <label for="pickupDate">Pickup Date</label>
+                <input type="date" id="pickupDate" name="pickupDate" required>
+                
+                <label for="pickupTime">Pickup Time</label>
+                <input type="time" id="pickupTime" name="pickupTime" required>
+                
+                <label for="ReturnDate">Return Date</label>
+                <input type="date" id="ReturnDate" name="ReturnDate" required>
+                
+                <input type="hidden" id="carId" name="carId">
+
+                <div class="form-buttons">
+                    <button class="rent-now" onclick="submitForm()">Rent Now</button>
+                    <button class="cancel" onclick="closeForm()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Car Information Box -->
+        <div class="car-info-box">
+            <h2>Car Information</h2>
+            <div class="car-info">
+                <h3 id="carName"></h3>
+                <img id="carImage" src="" alt="Car Image">
+                <div id="carDescription"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       
+    window.onload = function() {
+    var params = new URLSearchParams(window.location.search);
+    var carName = decodeURIComponent(params.get('carName'));
+    
+    // Populate car information
+    document.getElementById('carName').innerText = carName;
+    document.getElementById('carImage').src = decodeURIComponent(params.get('imageUrl'));
+
+    var formDescription = document.getElementById('carDescription');
+
+    // Set common car description
+    formDescription.innerHTML += `
+                <p>Maximum Persons: ${decodeURIComponent(params.get('maxPersons'))}</p>
+                <p>Fuel Efficiency: ${decodeURIComponent(params.get('fuelEfficiency'))}</p>
+                <p>${decodeURIComponent(params.get('pricePerKm'))}</p>
+
+            `;
+
+    // Set specific description based on the car
+    if (carName === 'Toyota Corolla AXIO') {
+        formDescription.innerHTML += `
+            <p><strong>Interior Features:</strong> Air conditioning, comfortable cloth seats, spacious trunk</p>
+            <p><strong>Delivery Options:</strong> Not Available</p>
+        `;
+    }
+    else if (carName === 'Toyota Sienna') {
+        formDescription.innerHTML += `
+            <p><strong> Features:</strong>Air conditioning, Spacious cabin, Touchscreen infotainment system, Bluetooth, USB ports</p>
+            <p><strong>Safety Features:</strong> Toyota Safety Sense suite</p>
+            <p><strong>Delivery Options:</strong> Not Available</p>
+        `;
+    }
+    else if (carName === 'Zotye Z100') {
+        formDescription.innerHTML += `
+            <p><strong>Features:</strong>Air conditioning, AM/FM radio, CD player</p>
+             <p><strong>Delivery Options:</strong> Not Available</p>
+        `;
+    }
+    else if (carName === 'Suzuki Spacia') {
+        formDescription.innerHTML += `
+            <p><strong>Interior Features:</strong>Air conditioning,AM/FM radio, CD player, Bluetooth connectivity</p>
+            <p>Delivery options are not available </p>
+            <p><strong>Safety Features:</strong> Dual front airbags, ABS brakes, stability control</p>
+            
+        `;
+    }
+        
+        else if (carName === 'Toyota Hilux') {
+                var formDescription = document.getElementById('carDescription');
+                formDescription.innerHTML += `
+                    <p><strong> Features:</strong>Air conditioning, Basic audio system, USB ports</p>
+                    <p><strong>Safety Features:</strong> Front airbags, ABS brakes, stability control</p>
+                    <p><strong>Delivery Options:</strong> Not Available</p>
+                    
+                `;
+            }
+        
+        else if (carName === 'Maruti Suzuki Swift') {
+                var formDescription = document.getElementById('carDescription');
+                formDescription.innerHTML += `
+                    <p><strong>Features:</strong>Air conditioning, Touchscreen infotainment system, Bluetooth, USB ports</p>
+                    <p><strong>Safety Features:</strong> Dual front airbags, ABS brakes, rear parking sensors (model dependent)</p>
+                    <p><strong>Delivery Options:</strong> Not Available</p>
+                `;
+            }
+            else if (carName === 'Suzuki Wagon R') {
+                var formDescription = document.getElementById('carDescription');
+                formDescription.innerHTML += `
+                    <p><strong>Interior Features:</strong>Air conditioning, Spacious cabin, adjustable cargo space,AM/FM radio, CD player, USB port</p>
+                    <p><strong>Safety Features:</strong> Dual front airbags, ABS brakes, stability control</p>
+                    <p><strong>Delivery Options:</strong> Not Available</p>
+                `;
+            }
+            else if (carName === 'Toyota Ipsum') {
+                var formDescription = document.getElementById('carDescription');
+                formDescription.innerHTML += `
+                    <p><strong>Interior Features:</strong>Air conditioning, Spacious cabin, versatile cargo space,AM/FM radio, CD player, Bluetooth, USB ports</p>
+                    <p><strong>Safety Features:</strong> Dual front airbags, ABS brakes</p>
+                    <p><strong>Delivery Options:</strong> Not Available</p>
+                    
+                `;
+            }
+            else if (carName === 'Alto 800') {
+                var formDescription = document.getElementById('carDescription');
+                formDescription.innerHTML += `
+                    <p><strong>Safety Features:</strong> Front airbags, ABS with EBD, child safety locks</p>
+                    <p><strong>Delivery Options:</strong> Not Available</p>
+                `;
+            }
+            else if (carName === 'Toyota Sienna') {
+                var formDescription = document.getElementById('carDescription');
+                formDescription.innerHTML += `
+                    <p><strong>Interior Features:</strong>Air conditioning, Spacious cabin,  versatile cargo space,Touchscreen infotainment system, Bluetooth, USB ports</p>
+                    <p><strong>Safety Features:</strong> Toyota Safety Sense suite</p>
+                    <p><strong>Delivery Options:</strong> Not Available</p>
+                `;
+            }
+
+
+
+    };
+
+
+        function submitForm() {
+            var customerName = document.getElementById('customerName').value;
+            var customerPhone = document.getElementById('customerPhone').value;
+            var pickupDate = document.getElementById('pickupDate').value;
+            var pickupTime = document.getElementById('pickupTime').value;
+            var carId = document.getElementById('carId').value;
+
+            // Check if any field is empty
+            if (!customerName || !customerPhone || !pickupDate || !pickupTime) {
+                alert("Please fill in all fields.");
+                return; // Exit function if any field is empty
+            }
+
+            // If all fields are filled, proceed to submit the form
+            alert("Form submitted!");
+            window.location.href = 'index.html';
+        }
+
+           
+        
+
+       
+    </script>
+</body>
+</html>
